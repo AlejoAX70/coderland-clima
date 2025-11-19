@@ -1,65 +1,108 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import WeatherSearch from "./components/WeatherSearch";
+import WeatherCard from "./components/WatherCard";
+import { Cloud } from "lucide-react";
+import { WeatherData } from "./types";
+import { fetchWeather } from "./utils/weather/api";
+
+
+const Index = () => {
+ const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleSearch = async (city: string) => {
+    setIsLoading(true);
+    setErrorMessage(null);
+    setWeatherData(null);
+
+    try {
+      const result = await fetchWeather(city);
+      setWeatherData(result);
+    } catch (error: any) {
+      setErrorMessage(error.message || "Error desconocido");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="min-h-screen bg-blue-400 relative overflow-hidden">
+
+      {/* Fondo animado */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <Cloud
+          className="absolute top-20 left-10 w-32 h-32 text-cloud opacity-30 animate-pulse"
+          style={{ animationDelay: "0s", animationDuration: "8s" }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+        <Cloud
+          className="absolute top-40 right-20 w-24 h-24 text-cloud opacity-20 animate-pulse"
+          style={{ animationDelay: "2s", animationDuration: "10s" }}
+        />
+        <Cloud
+          className="absolute bottom-32 left-1/4 w-40 h-40 text-cloud opacity-25 animate-pulse"
+          style={{ animationDelay: "4s", animationDuration: "12s" }}
+        />
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4 py-12 md:py-20">
+
+        {/* Header */}
+        <header className="text-center mb-12 animate-in fade-in slide-in-from-top-5 duration-700">
+          <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-4 drop-shadow-lg">
+            Clima App
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-xl md:text-2xl text-foreground/80 max-w-2xl mx-auto">
+            Descubre el clima actual de cualquier ciudad del mundo
           </p>
+        </header>
+
+        {/* Buscador */}
+        <div className="mb-12 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-150">
+          <WeatherSearch onSearch={handleSearch} isLoading={isLoading} />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+        {/* Loading */}
+        {isLoading && (
+          <div className="text-center animate-in fade-in duration-300">
+            <div className="inline-block w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            <p className="mt-4 text-lg text-foreground/80">
+              Buscando información del clima...
+            </p>
+          </div>
+        )}
+
+        {/* Error */}
+        {errorMessage && !isLoading && (
+          <div className="text-center text-red-600 mt-4 animate-in fade-in duration-300">
+            <p className="text-lg font-semibold">{errorMessage}</p>
+          </div>
+        )}
+
+        {/* Resultado */}
+        {weatherData && !isLoading && (
+          <div className="animate-in fade-in slide-in-from-bottom-5 duration-700">
+            <WeatherCard data={weatherData} />
+          </div>
+        )}
+
+        {/* Mensaje inicial */}
+        {!weatherData && !isLoading && !errorMessage && (
+          <div className="text-center text-foreground/60 animate-in fade-in duration-700 delay-300">
+            <Cloud className="w-24 h-24 mx-auto mb-4 opacity-30" />
+            <p className="text-lg">Busca una ciudad para ver el clima</p>
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <footer className="absolute bottom-4 left-0 right-0 text-center text-foreground/60 text-sm">
+        <p>@Alejo</p>
+      </footer>
     </div>
   );
-}
+};
+
+export default Index;
