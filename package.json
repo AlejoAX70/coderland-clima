@@ -7,9 +7,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "build": "next build"
   },
   "dependencies": {
     "lucide-react": "^0.554.0",

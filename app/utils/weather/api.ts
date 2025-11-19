@@ -1,7 +1,7 @@
 import { WeatherData } from "@/app/types";
 import { getWeatherCategory } from "./categories";
 
-const API_KEY = process.env.NEXT_PUBLIC_WEATHER_KEY;
+const API_KEY = "dc14984ceae2d79b5a7ef6ad3723850c";
 
 export async function fetchWeather(city: string): Promise<WeatherData> {
 

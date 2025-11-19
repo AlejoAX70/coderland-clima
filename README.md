@@ -1,36 +1,165 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AtmósferaAlejo — Aplicación del Clima con Next.js + TypeScript + Jest
 
-## Getting Started
+Esta es una aplicación que permite consultar el clima actual de cualquier ciudad del mundo utilizando la API de OpenWeatherMap.
+Incluye pruebas unitarias completas con Jest y React Testing Library con un coverage superior al 80%.
 
-First, run the development server:
+## Tecnologías Utilizadas
 
-```bash
+Next.js 14
+
+React 18
+
+TypeScript
+
+TailwindCSS
+
+Jest
+
+React Testing Library
+
+OpenWeather API
+
+
+## Instalación del Proyecto
+
+#### 1. Clona este repositorio:
+
+git clone https://github.com/AlejoAX70/coderland-clima.git
+
+#### 2. Entra al proyecto:
+````
+cd atmosfera-alejo
+````
+#### 3. Instala dependencias:
+````
+npm install
+````
+
+## Ejecutar la Aplicación
+
+#### Inicia el servidor de desarrollo
+
+````
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+````
+
+#### La aplicación estará disponible en:
+````
+http://localhost:3000
+````
+## Ejecutar Pruebas Unitarias
+
+#### Para correr las pruebas:
+````
+npm test
+````
+#### Para generar reporte de cobertura:
+````
+npm run test:coverage
+````
+#### Tu resultado debe mostrar algo similar a:
+````
+All files | 93% statements | 94% branches | 92% functions | 93% lines
+````
+
+(El proyecto ya cumple el requisito de +80% coverage.)
+
+## Pruebas Incluidas
+
+Las pruebas unitarias cubren:
+
+✔️ 1. Búsqueda exitosa
+
+Verifica que la aplicación muestra los datos del clima cuando la API responde correctamente.
+
+✔️ 2. Manejo de error
+
+Valida que el usuario vea un mensaje cuando ingresa una ciudad inválida.
+
+✔️ 3. Funcionalidad del input y botón
+
+Confirma que:
+
+el usuario puede escribir una ciudad,
+
+el botón ejecuta la búsqueda,
+
+se llama a la API con el valor ingresado.
+
+✔️ Utilidades
+
+Se testean funciones como:
+
+#### normalizeWeatherData
+
+#### getWeatherCategory
+
+#### windDirection
+
+#### manejo de fetch simulado
+```
+📁 Estructura del Proyecto
+app/
+  ├── components/
+  │     ├── WeatherCard.tsx
+  │     └── WeatherSearch.tsx
+  ├── utils/
+  │     ├── normalize.ts
+  │     ├── categories.ts
+  │     ├── wind.ts
+  │     ├── format.ts
+  │     ├── weatherIcons.tsx
+  │     └── api.ts
+  ├── page.tsx
+  └── layout.tsx
+__tests__/
+coverage/
+public/
+.env
+jest.config.js
+jest.setup.ts
+tsconfig.json
+next.config.js
+package.json
+README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🧩 Funcionalidades Principales
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Buscar clima por ciudad
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Mostrar:
 
-## Learn More
+temperatura
 
-To learn more about Next.js, take a look at the following resources:
+sensación térmica
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+humedad
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+presión
 
-## Deploy on Vercel
+velocidad y dirección del viento
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+nubosidad
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+hora de amanecer y atardecer
+
+Mostrar iconos dinámicos según el clima
+
+Normalización y categorización de datos
+
+UX limpia y responsiva (Tailwind)
+```
+Scripts Disponibles
+npm run dev         # Ejecuta el proyecto en desarrollo
+npm run build       # Construye el proyecto para producción
+npm test            # Ejecuta pruebas unitarias
+npm run test:watch  # Ejecuta pruebas en modo observador
+npm run test:coverage # Muestra reporte de cobertura
+```
+API Utilizada
+
+OpenWeatherMap — https://openweathermap.org/api
+
+
+
