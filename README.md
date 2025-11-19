@@ -161,5 +161,8 @@ API Utilizada
 
 OpenWeatherMap — https://openweathermap.org/api
 
+# Nota sobre la API Key 
+La API Key utilizada en este proyecto se encuentra visible únicamente con fines de evaluación para la prueba técnica.
+
 
 
