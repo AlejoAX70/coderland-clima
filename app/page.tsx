@@ -52,7 +52,7 @@ const Index = () => {
         {/* Header */}
         <header className="text-center mb-12 animate-in fade-in slide-in-from-top-5 duration-700">
           <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-4 drop-shadow-lg">
-            Clima App
+            Atmósfera Alejo
           </h1>
           <p className="text-xl md:text-2xl text-foreground/80 max-w-2xl mx-auto">
             Descubre el clima actual de cualquier ciudad del mundo
